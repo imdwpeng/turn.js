@@ -1139,7 +1139,7 @@ turnMethods = {
 			for (page in data.pageWrap) {
 
 				if (!has(page, data.pageWrap)) continue;
-
+				
 				data.pageWrap[page].css({display: (pos.pageV[page]) ? '' : 'none', 'z-index': pos.pageZ[page] || 0});
 
 				if (data.pages[page]) {
@@ -1261,13 +1261,12 @@ flipMethods = {
 
 			if (c.x<=0 || c.y<=0 || c.x>=width || c.y>=height) return false;
 
-			if (c.y<csz) c.corner = 't';
-			else if (c.y>=height-csz) c.corner = 'b';
-			else return false;
+			// 扩大触发翻页的范围
+			if (c.y<(height-pos.top)/2) c.corner = 't';
+			else c.corner = 'b';
 			
-			if (c.x<=csz) c.corner+= 'l';
-			else if (c.x>=width-csz) c.corner+= 'r';
-			else return false;
+			if (c.x<=(width-pos.left)/2) c.corner+= 'l';
+			else c.corner+= 'r';
 
 		return ($.inArray(c.corner, allowedCorners)==-1) ? false : c;
 
